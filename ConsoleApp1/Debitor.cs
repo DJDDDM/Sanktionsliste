@@ -15,6 +15,7 @@ namespace Businessobjects
 
         public bool is_hit()
         {
+                
             return SL.is_on(name);
         }
     }
