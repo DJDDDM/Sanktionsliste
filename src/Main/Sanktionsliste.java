@@ -1,5 +1,6 @@
 package Main;
 import Input.Inputhandler;
+import Output.Outputhandler;
 
 public class Sanktionsliste {
 
@@ -16,8 +17,8 @@ public class Sanktionsliste {
 
 
     public void output (String name, boolean result) {
-        if (result) System.out.println(name + " steht drauf");
-        else System.out.println(name + " steht nicht drauf");
+        Output Out = Outputhandler.getInstance();
+        Out.output(name, result);
 
     }
 }
