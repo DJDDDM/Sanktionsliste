@@ -1,14 +1,14 @@
 package Main;
 
+import java.util.List;
+
 public class Main {
     public static void main(String[] args) {
         Sanktionsliste SL = new Sanktionsliste();
         String input = SL.input();
-        Boolean result = SL.compare(input, "Putin");
+        List<String> Sanktionsliste = SL.createSanktionsliste();
+        Boolean result = SL.compare(input, Sanktionsliste);
         SL.output(input, result);
-
     }
-
-
 }
 

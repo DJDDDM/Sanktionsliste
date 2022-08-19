@@ -1,6 +1,9 @@
 package Main;
 import Input.Inputhandler;
 import Output.Outputhandler;
+import Sanktionslistencreation.Sanktionslistenhandler;
+
+import java.util.List;
 
 public class Sanktionsliste {
 
@@ -10,8 +13,11 @@ public class Sanktionsliste {
         return In.getname();
 
     }
-    public boolean compare(String a, String b) {
-        return (a.equals(b)) ? true : false;
+    public boolean compare(String name, List<String> Sanktionsliste) {
+        for (String line : Sanktionsliste){
+            if (line.contains(name)) return true;
+        }
+        return false;
     }
 
 
@@ -19,6 +25,10 @@ public class Sanktionsliste {
     public void output (String name, boolean result) {
         Output Out = Outputhandler.getInstance();
         Out.output(name, result);
+    }
 
+    public List<String> createSanktionsliste(){
+       Sanktionslistencreator Creator = Sanktionslistenhandler.getInstance();
+       return Creator.getSanktionsliste();
     }
 }

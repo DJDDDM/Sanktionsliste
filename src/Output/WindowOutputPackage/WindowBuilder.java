@@ -13,11 +13,6 @@ public class WindowBuilder {
         return properties;
     }
 
-    private void buildPanel() {
-        properties.panel = new JPanel();
-        properties.out = new JLabel("Gesucht?");
-        properties.panel.add(properties.out);
-    }
 
     private void buildFrame() {
         properties.Frame = new JFrame();

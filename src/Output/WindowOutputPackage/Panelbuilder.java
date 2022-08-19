@@ -14,11 +14,15 @@ public class Panelbuilder {
     public WindowProperties buildPanel() {
         WindowProperties properties = new WindowProperties();
         properties.panel = new JPanel();
-        String outstring = name;
-        if (result) outstring += " steht drauf";
-        else outstring += " steht nicht drauf";
-        properties.out = new JLabel(outstring);
+        properties.out = new JLabel(buildoutstring());
         properties.panel.add(properties.out);
         return properties;
+    }
+
+    private String buildoutstring(){
+        String outstring = this.name;
+        if (this.result) outstring += " steht drauf";
+        else outstring += " steht nicht drauf";
+        return outstring;
     }
 }
