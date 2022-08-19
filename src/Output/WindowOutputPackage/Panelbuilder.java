@@ -1,12 +1,14 @@
 package Output.WindowOutputPackage;
 
 
+import Main.Result;
+
 import javax.swing.*;
 
 public class Panelbuilder {
     private String name;
-    private boolean result;
-    public Panelbuilder(String name, boolean result) {
+    private Result result;
+    public Panelbuilder(String name, Result result) {
         this.name = name;
         this.result = result;
     }
@@ -20,9 +22,11 @@ public class Panelbuilder {
     }
 
     private String buildoutstring(){
-        String outstring = this.name;
-        if (this.result) outstring += " steht drauf";
-        else outstring += " steht nicht drauf";
+        String outstring = "";
+        if (this.result.flag){
+            outstring = "<html>" + this.name + " steht drauf <br/>vollständiger Name: " + result.wholeName + "</html>";
+        }
+        else outstring = this.name + " steht nicht drauf";
         return outstring;
     }
 }

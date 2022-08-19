@@ -13,16 +13,16 @@ public class Sanktionsliste {
         return In.getname();
 
     }
-    public boolean compare(String name, List<String> Sanktionsliste) {
+    public Result compare(String name, List<String> Sanktionsliste) {
         for (String line : Sanktionsliste){
-            if (line.contains(name)) return true;
+            if (line.contains(name)) return new Result(true,line);
         }
-        return false;
+        return new Result();
     }
 
 
 
-    public void output (String name, boolean result) {
+    public void output (String name, Result result) {
         Output Out = Outputhandler.getInstance();
         Out.output(name, result);
     }

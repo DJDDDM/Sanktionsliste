@@ -1,13 +1,15 @@
  package Output.WindowOutputPackage;
 
 
+import Main.Result;
+
 import javax.swing.*;
 
 public class WindowBuilder {
     private WindowProperties properties = new WindowProperties();
     private String name;
     private boolean result;
-    public WindowProperties buildwindow(String name, boolean result) {
+    public WindowProperties buildwindow(String name, Result result) {
         this.properties = new Panelbuilder(name,result).buildPanel();
         buildFrame();
         return properties;

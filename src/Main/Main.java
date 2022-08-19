@@ -7,7 +7,7 @@ public class Main {
         Sanktionsliste SL = new Sanktionsliste();
         String input = SL.input();
         List<String> Sanktionsliste = SL.createSanktionsliste();
-        Boolean result = SL.compare(input, Sanktionsliste);
+        Result result = SL.compare(input, Sanktionsliste);
         SL.output(input, result);
     }
 }
