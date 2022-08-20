@@ -1,5 +1,5 @@
 import Main.Result;
-import Main.Sanktionsliste;
+import Main.Sanktionslistencontroller;
 import Main.Sanktionslistenentry;
 import org.junit.Before;
 import org.junit.Test;
@@ -11,10 +11,10 @@ import static org.junit.Assert.*;
 
 public class testcompare {
     private List<Sanktionslistenentry> Sanktionsliste;
-    private Sanktionsliste SL;
+    private Sanktionslistencontroller SL;
     @Before
     public void setUp(){
-        this.SL = new Sanktionsliste();
+        this.SL = new Sanktionslistencontroller();
         this.Sanktionsliste = new ArrayList<>();
         Sanktionslistenentry entry = new Sanktionslistenentry();
         entry.wholeName = "Abu Ali";

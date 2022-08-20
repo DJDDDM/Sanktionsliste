@@ -1,5 +1,5 @@
 <component name="ArtifactManager">
-  <artifact type="jar" name="Sanktionsliste.jar">
+  <artifact type="jar" name="Sanktionsliste:jar">
     <output-path>$PROJECT_DIR$/out/artifacts/Sanktionsliste_jar</output-path>
     <root id="archive" name="Sanktionsliste.jar">
       <element id="module-output" name="Sanktionsliste" />
