@@ -6,7 +6,7 @@ public class Main {
     public static void main(String[] args) {
         Sanktionsliste SL = new Sanktionsliste();
         String input = SL.input();
-        List<String> Sanktionsliste = SL.createSanktionsliste();
+        List<Sanktionslistenentry> Sanktionsliste = SL.createSanktionsliste();
         Result result = SL.compare(input, Sanktionsliste);
         SL.output(input, result);
     }

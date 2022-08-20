@@ -13,9 +13,9 @@ public class Sanktionsliste {
         return In.getname();
 
     }
-    public Result compare(String name, List<String> Sanktionsliste) {
-        for (String line : Sanktionsliste){
-            if (line.contains(name)) return new Result(true,line);
+    public Result compare(String name, List<Sanktionslistenentry> Sanktionsliste) {
+        for (Sanktionslistenentry Entry : Sanktionsliste){
+            if (Entry.wholeName.toLowerCase().contains(name.toLowerCase())) return new Result(true,Entry);
         }
         return new Result();
     }
@@ -27,7 +27,7 @@ public class Sanktionsliste {
         Out.output(name, result);
     }
 
-    public List<String> createSanktionsliste(){
+    public List<Sanktionslistenentry> createSanktionsliste(){
        Sanktionslistencreator Creator = Sanktionslistenhandler.getInstance();
        return Creator.getSanktionsliste();
     }

@@ -1,16 +1,16 @@
 package Main;
 
 public class Result {
+    public Sanktionslistenentry Entry;
     public Boolean flag;
-    public String wholeName;
 
     public Result(){
         flag = false;
-        wholeName = "";
+        Entry = null;
     }
 
-    public Result(Boolean flag, String wholeName){
+    public Result(Boolean flag, Sanktionslistenentry Entry){
         this.flag = flag;
-        this.wholeName = wholeName;
+        this.Entry = Entry;
     }
 }

@@ -1,39 +1,84 @@
 package Sanktionslistencreation;
 
 import Main.Sanktionslistencreator;
+import Main.Sanktionslistenentry;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
 
-import org.w3c.dom.*;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.xpath.*;
-import java.util.*;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class XMLCreator implements Sanktionslistencreator{
-    public List<String> getSanktionsliste() {
+    public List<Sanktionslistenentry> getSanktionsliste() {
+        return fillSanktionsliste(getDocument());
+    }
+
+    private Document getDocument(){
         try {
-            NodeList Sanktionsnodes = getNodes();
-            List<String> Sanktionsliste = fillListfromNodeList(Sanktionsnodes);
-            return Sanktionsliste;
-        } catch (Exception e) {
+            return DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(getFilename());
+        } catch (Exception e){
             throw new RuntimeException(e);
         }
+
     }
 
-    private NodeList getNodes() throws Exception{
-        Document Doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(getFilename());
-        XPathExpression expr = XPathFactory.newInstance().newXPath().compile(getExpression());
-        NodeList nodes = (NodeList) expr.evaluate(Doc, XPathConstants.NODESET);
-        return nodes;
+    private List<Sanktionslistenentry> fillSanktionsliste(Document document){
+        NodeList Entitynodes = document.getDocumentElement().getElementsByTagName("sanctionEntity");
+        List<Sanktionslistenentry> Sanktionsliste = createList(Entitynodes);
+        return Sanktionsliste;
     }
 
-    private List<String> fillListfromNodeList(NodeList nodes){
-        List<String> values = new ArrayList<>();
-        for (int i = 0; i < nodes.getLength(); i++) {
-            values.add(nodes.item(i).getNodeValue());
+    private List<Sanktionslistenentry> createList(NodeList Entitynodes) {
+        List<Sanktionslistenentry> Sanktionsliste = new ArrayList<>();
+        for (int i = 0; i < Entitynodes.getLength(); i++) {
+            Element Entityelement = (Element) Entitynodes.item(i);
+            NodeList namenodes = Entityelement.getElementsByTagName("nameAlias");
+            for (int j = 0; j < namenodes.getLength(); j++) {
+                Sanktionsliste.add(fillEntry(Entityelement, j));
+            }
         }
-        return values;
+        return Sanktionsliste;
     }
 
-    protected String getExpression() {return "/export/sanctionEntity/nameAlias/@wholeName";}
+    private Sanktionslistenentry fillEntry(Element Entityelement, int j) {
+        Sanktionslistenentry Entry = new Sanktionslistenentry();
+        Entry = getNames(Entityelement, j);
+        Entry.source = getSource(Entityelement, j);
+        Entry.birthdate = getbirthdate(Entityelement, Entry);
+        return Entry;
+    }
+
+    private LocalDate getbirthdate(Element Entityelement, Sanktionslistenentry Entry) {
+        try {
+            return LocalDate.parse(Entityelement.getElementsByTagName("birthdate").item(0).getAttributes().getNamedItem("birthdate").getNodeValue());
+        } catch (NullPointerException e) {
+            return null;
+        }
+    }
+
+    private Sanktionslistenentry getNames(Element Entityelement, int j) {
+        Sanktionslistenentry Entry = new Sanktionslistenentry();
+        Entry.firstName = Entityelement.getElementsByTagName("nameAlias").item(j).getAttributes().getNamedItem("firstName").getNodeValue();
+        Entry.middleName = Entityelement.getElementsByTagName("nameAlias").item(j).getAttributes().getNamedItem("middleName").getNodeValue();
+        Entry.lastName = Entityelement.getElementsByTagName("nameAlias").item(j).getAttributes().getNamedItem("lastName").getNodeValue();
+        Entry.wholeName = Entityelement.getElementsByTagName("nameAlias").item(j).getAttributes().getNamedItem("wholeName").getNodeValue();
+        return Entry;
+    }
+
+    private URL getSource(Element Entityelement, int j) {
+        Element Nameelement = (Element) Entityelement.getElementsByTagName("nameAlias").item(j);
+        try {
+            return new URL(Nameelement.getElementsByTagName("regulationSummary").item(0).getAttributes().getNamedItem("publicationUrl").getNodeValue());
+        } catch (MalformedURLException e){
+            return null;
+        }
+    }
+
     protected String getFilename() {return "Sanktionsliste.xml";}
 
 }
