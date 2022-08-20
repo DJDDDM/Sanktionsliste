@@ -1,5 +1,6 @@
 package Main;
 
+import java.net.URI;
 import java.net.URL;
 import java.time.LocalDate;
 
@@ -8,7 +9,7 @@ public class Sanktionslistenentry {
     public String middleName;
     public String lastName;
     public String wholeName;
-    public URL source;
+    public URI source;
     public LocalDate birthdate;
 
 

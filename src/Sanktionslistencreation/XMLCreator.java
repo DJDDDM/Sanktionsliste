@@ -7,11 +7,16 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
 import javax.xml.parsers.DocumentBuilderFactory;
+import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
+import static javax.swing.JOptionPane.showMessageDialog;
 
 public class XMLCreator implements Sanktionslistencreator{
     public List<Sanktionslistenentry> getSanktionsliste() {
@@ -22,6 +27,7 @@ public class XMLCreator implements Sanktionslistencreator{
         try {
             return DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(getFilename());
         } catch (Exception e){
+            showMessageDialog(null, getFilename() + " wurde nicht gefunden. \nstellen Sie sicher, dass sich die Datei im selben Ordner befindet");
             throw new RuntimeException(e);
         }
 
@@ -70,11 +76,11 @@ public class XMLCreator implements Sanktionslistencreator{
         return Entry;
     }
 
-    private URL getSource(Element Entityelement, int j) {
+    private URI getSource(Element Entityelement, int j) {
         Element Nameelement = (Element) Entityelement.getElementsByTagName("nameAlias").item(j);
         try {
-            return new URL(Nameelement.getElementsByTagName("regulationSummary").item(0).getAttributes().getNamedItem("publicationUrl").getNodeValue());
-        } catch (MalformedURLException e){
+            return new URI(Nameelement.getElementsByTagName("regulationSummary").item(0).getAttributes().getNamedItem("publicationUrl").getNodeValue());
+        } catch (URISyntaxException e) {
             return null;
         }
     }
