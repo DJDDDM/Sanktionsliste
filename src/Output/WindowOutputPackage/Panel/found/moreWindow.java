@@ -7,7 +7,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.IOException;
+import java.util.List;
 
 public class moreWindow {
     public void create(Result result) {
@@ -32,19 +34,11 @@ public class moreWindow {
         String text = "<html> Quelle: <a href=\">" + result.Entry.source + "\">" + result.Entry.source + " </a></html>";
         JLabel Link = new JLabel(text);
         Link.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        Link.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                try {
-                    Desktop.getDesktop().browse(result.Entry.source);
-                } catch (IOException ex) {
-                }
-            }
-        });
+        Link.addMouseListener(new Listener(result));
         return Link;
     }
 
-    private String buildinformation(Sanktionslistenentry Entry) {
+        private String buildinformation(Sanktionslistenentry Entry) {
         String out = "";
         out += "<html>" ;
         if (Entry.firstName != "") out += "Vorname: " + Entry.firstName + "<br>";
@@ -54,5 +48,19 @@ public class moreWindow {
         if (Entry.birthdate != null) out += "Geburtsdatum: " + Entry.birthdate + "<br>";
         out += "</html>" ;
         return out;
+    }
+
+    private class Listener extends MouseAdapter {
+        private Result result;
+        public Listener(Result result) {
+            this.result = result;
+        }
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            try {
+                Desktop.getDesktop().browse(result.Entry.source);
+            } catch (IOException ex) {
+            }
+        }
     }
 }
